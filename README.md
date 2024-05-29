@@ -1,4 +1,6 @@
 
+#THIS NEEDS TO BE UPDATED. LOTS OF CHANGES
+
 # Dexcom ESP
 
 The objective of this project is to display Dexcom readings on an LED matrix. It uses an ESP32 and checks the Dexcom share endpoint for readings. It will auto update every "x" mins and display it on an always on LED matrix display.
