@@ -1,4 +1,23 @@
 //forked from https://github.com/TooSpeedy/Dexcom-ESP32-LED-Matrix/tree/main
+//tested on esp32-S3, following settings:
+//USB CDC On Boot: Enabled
+// CPU Frequency: 240
+// Core Debug level: none
+// USB DFU on boot: enabled
+// Erase all flash before sketch upload: enabled
+// Events run on core: 1
+// Flashmode: QIO 80Mhz
+// Flash SIze: 16MB (128Mb)
+// JTAG adapter: Disabled
+// Arduino Runs On: Core 1
+// USB Firmware MSC On boot: Enabled
+// Partition Scheme: Default 4MB with spiffs (1.2MB APP/1.5MB SPIFFS)
+// PSRAM: Disabled
+// Upload Mode: USB-OTG CDC (TinyUSB)
+// Upload Speed: 921600
+// USB Mode: USB-OTG (TinyUSB)
+
+
 
 #include <WiFi.h>
 #include <WiFiClient.h>
@@ -85,8 +104,8 @@ const uint16_t colors[] = {
 
 
 // Wifi Config
-const char* ssid = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-const char* password = "xxxxxxxxxxxxxxxxxxxx";
+const char* ssid = "WIFI SSID";
+const char* password = "WIFI PASSWORD";
 
 // Decom URL - US use share1
 const char* host = "https://share1.dexcom.com/ShareWebServices/Services/General/LoginPublisherAccountByName";
@@ -129,13 +148,10 @@ void setup() {
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
+    esp_task_wdt_reset(); //reset watchdog timer
    // Serial.println("Connecting to WiFi...");
   }
-  matrix.setTextColor(colors[RED]);
-  matrix.fillScreen(0);
-  matrix.setCursor(1, 1);
-  matrix.print("Auth");
-  matrix.show();
+  
  // Serial.println("Connected to WiFi");
   authenticate();
   reauthLoopTimer.restart();
@@ -191,23 +207,47 @@ void loop() {
 }
 
 void authenticate(){
+  matrix.setTextColor(colors[RED]);
+  matrix.fillScreen(0);
+  matrix.setCursor(1, 1);
+  matrix.print("Auth");
+  matrix.show();
+
   HTTPClient https;
   String url = host;
   https.begin(url);
   https.addHeader("Content-Type", "application/json");
   https.addHeader("User-Agent", "Dexcom Share/3.0.2.11 CFNetwork/711.2.23 Darwin/14.0.0");
   https.addHeader("Accept", "application/json");
-
-  // Credentials
-  String json = "{\"accountName\":\"xxxxxxxxxx\",\"applicationId\":\"d89443d2-327c-4a6f-89e5-496bbb0317db\",\"password\":\"xxxxxxxxxx\"}";
-  int httpCode = https.POST(json);
+  int httpCode = 100;
+  
+  while(httpCode > 299 || httpCode < 200){
+    // Credentials
+    String json = "{\"accountName\":\"USERNAME\",\"applicationId\":\"d89443d2-327c-4a6f-89e5-496bbb0317db\",\"password\":\"PASSWORD\"}";
+    httpCode = https.POST(json);
+    if(httpCode > 299 || httpCode < 200){
+      matrix.setTextColor(colors[RED]);
+      matrix.fillScreen(0);
+      matrix.setCursor(1, 1);
+      matrix.print("E");
+      matrix.print(httpCode);
+      matrix.show();
+      for(int i = 0; i < 10; i++){ // 1 second per loop. How many loops is how long it will wait before retrying.
+        esp_task_wdt_reset(); //reset watchdog timer
+        delay(1000);
+      }
+    }
+  matrix.fillScreen(0);
+  matrix.show();  
+  }
 
   String payload = https.getString();
   //Serial.println(httpCode);
- // Serial.println(payload);
-  authkey = payload;
+  //Serial.println(payload);
+  authkey = payload; 
   authkey = authkey.substring(1, authkey.length() - 1);
   https.end();
+
 }
 
 void getPayload(){
