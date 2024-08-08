@@ -2,12 +2,18 @@
 # THIS NEEDS TO BE UPDATED. LOTS OF CHANGES
 
 Main changes from TooSpeedy repo:
-  Converted to US standard units
-  Light sensor
-  Small speaker
-  Button on the top to mute said speaker
-  Colors used dependent on glucose state
-  Will light up the entire top row of LEDs full white when in an alert state. Helps wake up from sleep.
+  
+  	Converted to US standard units
+  
+  	Light sensor
+  
+  	Small speaker
+  
+  	Button on the top to mute said speaker
+  
+  	Colors used dependent on glucose state
+  
+  	Will light up the entire top row of LEDs full white when in an alert state. Helps wake up from sleep.
 
 Based on the light sensor, it  has two modes; day time and night time. With the day time mode green means good. Once it goes into night time mode, it's as dim as possible red when everything is good so as to disturb sleep the least. As things get "worse" it goes to amber and then adds the white bar. It also turns on an audible alarm.
 
