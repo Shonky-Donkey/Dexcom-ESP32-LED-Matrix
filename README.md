@@ -29,6 +29,6 @@ TODO:
 
     Look into why device sometimes will bootloop with all white LEDs. Suspect need to play around with pulldown on LED dataline. Worst case need to add NFET to GND of LED array supply and manually turn on when ready 
 
-    Observe operation when dexcom server is down, and also error messages.
+    Observe operation when dexcom server is down, reading is "LOW" or "HIGH", and also error messages.
 
     Potentially add wifi registration, although without a method to put login for dexcom perhaps that is useless. Maybe make device enumerate as USB storage and have a config text file that contains wifi and dexcom login stuff. 
