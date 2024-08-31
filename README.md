@@ -1,7 +1,5 @@
 
-# THIS NEEDS TO BE UPDATED. LOTS OF CHANGES
-
-Main changes from TooSpeedy repo:
+#Main changes from TooSpeedy repo:
   
   	Converted to US standard units
   
@@ -25,10 +23,12 @@ The mute button on top turns on red LEDs on the top row from left to right, base
 
 I also added a bunch of watchdog type stuff, and refactored a lot of the code.
 
-TODO:
+#TODO:
 
     Look into why device sometimes will bootloop with all white LEDs. Suspect need to play around with pulldown on LED dataline. Worst case need to add NFET to GND of LED array supply and manually turn on when ready 
 
     Observe operation when dexcom server is down, reading is "LOW" or "HIGH", and also http error messages.
 
     Potentially add wifi registration, although without a method to put login for dexcom perhaps that is useless. Maybe make device enumerate as USB storage and have a config text file that contains wifi and dexcom login stuff. 
+
+    Add photos and hardware description to this readme.
