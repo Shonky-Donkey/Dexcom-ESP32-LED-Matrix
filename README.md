@@ -25,8 +25,9 @@ The mute button on top turns on red LEDs on the top row from left to right, base
 
 I also added a bunch of watchdog type stuff, and refactored a lot of the code.
 
-It still needs lots of tweaking, and there's some hardware instability. I need to look at the power supply... the native USB-C on the board I have just doesn't really cut it for the full display I think.
+TODO:
+    Look into why device sometimes will bootloop with all white LEDs. Suspect need to play around with pulldown on LED dataline. Worst case need to add NFET to GND of LED array supply and manually turn on when ready 
 
-Especially needs some work and testing to know what it will do when the Dexcom server is down.
+    Observe operation when dexcom server is down, and also error messages.
 
-
+    Potentially add wifi registration, although without a method to put login for dexcom perhaps that is useless. Maybe make device enumerate as USB storage and have a config text file that contains wifi and dexcom login stuff. 
