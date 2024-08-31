@@ -26,6 +26,7 @@ The mute button on top turns on red LEDs on the top row from left to right, base
 I also added a bunch of watchdog type stuff, and refactored a lot of the code.
 
 TODO:
+
     Look into why device sometimes will bootloop with all white LEDs. Suspect need to play around with pulldown on LED dataline. Worst case need to add NFET to GND of LED array supply and manually turn on when ready 
 
     Observe operation when dexcom server is down, and also error messages.
