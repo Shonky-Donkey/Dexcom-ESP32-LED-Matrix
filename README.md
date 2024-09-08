@@ -29,6 +29,8 @@ I also added a bunch of watchdog type stuff, and refactored a lot of the code.
 
     Observe operation when dexcom server is down, reading is "LOW" or "HIGH", and also http error messages.
 
+    Make it say "LOW" when (1-?)39 value. Make it say "No data" when 0. Progressively warn depending on how long of no data, and previous reading. 
+
     Potentially add wifi registration, although without a method to put login for dexcom perhaps that is useless. Maybe make device enumerate as USB storage and have a config text file that contains wifi and dexcom login stuff. 
 
     Add photos and hardware description to this readme.
